@@ -17,9 +17,26 @@
                         </a>
                         {{ end }}
                     </div>
-                    <h1>{{ .Title }}</h1>
-                    <h2 class="subheading">{{ .Params.subtitle }}</h2>
-                    <span class="meta">
+                    <h1 style="color:
+                        {{ if .Params.title_color }}
+                            {{ .Params.title_color }}
+                        {{ else }}
+                            {{ "white" }}
+                        {{ end }};">{{ .Title }}</h1>
+                    <h2 class="subheading"
+                        style="color:
+                        {{ if .Params.subtitle_color }}
+                            {{ .Params.subtitle_color }}
+                        {{ else }}
+                            {{ "white" }}
+                        {{ end }};">{{ .Params.subtitle }}</h2>
+                    <span class="meta"
+                          style="color:
+                          {{ if .Params.meta_color }}
+                              {{ .Params.meta_color }}
+                          {{ else }}
+                              {{ "white" }}
+                          {{ end }};">
                         Posted by 
                         {{ if .Params.author }}
                             {{ .Params.author }}
