@@ -228,6 +228,61 @@
     }
 </script>
 
+<!-- Osana Cookie consent form -->
+<script src="{{ "js/cookieconsent.min.js" | relURL }}"></script>
+<script>
+    function loadGAonConsent(){
+      window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+      ga('create', 'UA-158910325-1', 'auto');
+      ga('set', 'anonymizeIp', true);
+      ga('send', 'pageview');
+      var gascript = document.createElement("script");
+      gascript.async = true;
+      gascript.src = "https://www.google-analytics.com/analytics.js";
+      document.getElementsByTagName("head")[0].appendChild(gascript, document.getElementsByTagName("head")[0]);               
+    }
+
+    const log = function (message) {
+      console.log(message);
+    }
+    const cc = new CookieConsent({
+      type: 'opt-in',
+      palette: {
+        popup: { background: "#638bac", text: "#203445" },
+        button: { background: "#a1b7c9",text: "#ffffff" }
+      },
+      cookie: {
+        name: "consent",
+        expiryDays: 150,
+      },
+      law: {
+        regionalLaw: false,
+      },
+      location: true,
+    });
+    cc.on( "popupOpened", function () {
+      log('<em>popupOpened</em> event fired');
+    });
+    cc.on( "popupClose", function () {
+      log('<em>popupClose</em> event fired');
+    });
+    cc.on( "initialized", function ( statuses ) {
+      log( '<em>initialized</em> event fired with statuses: ' )
+      Object.keys( statuses ).forEach( status => {
+        log('<em>' + status + ':</em> <em>' + statuses[ status ] + '</em>');
+      })
+    });
+    cc.on( "statusChanged", function ( cookieName, status, chosenBefore ) {
+      if (cookieName == "cookieconsent_status_ANALYTICS" && status == "ALLOW") {
+        loadGAonConsent();
+      }
+      log('<em>statusChanged</em> event fired with status <em>' + status + '</em> for cookie <em>' + cookieName + '</em>');
+    });
+    cc.on( "revokeChoice", function () {
+      log('<em>revokeChoice()</em> event fired')
+    });
+    cc.on( "error", console.error );
+</script>
 <!-- 
      Because of the native support for backtick-style fenced code blocks 
      right within the Markdown is landed in Github Pages, 
