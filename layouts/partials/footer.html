@@ -242,6 +242,9 @@
       document.getElementsByTagName("head")[0].appendChild(gascript, document.getElementsByTagName("head")[0]);               
     }
 
+    const base = "{{ .Site.BaseURL }}";
+    const stripped = base.replace(/(^\w+:|^)\/\//, '');
+
     const log = function (message) {
       console.log(message);
     }
@@ -254,6 +257,7 @@
       cookie: {
         name: "consent",
         expiryDays: 150,
+        domain: stripped,
       },
       law: {
         regionalLaw: false,
