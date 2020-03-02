@@ -229,6 +229,7 @@
 </script>
 
 <!-- Osana Cookie consent form -->
+<!--
 <script src="{{ "js/cookieconsent.min.js" | relURL }}"></script>
 <script>
     function loadGAonConsent(){
@@ -287,6 +288,65 @@
     });
     cc.on( "error", console.error );
 </script>
+
+-->
+<style>
+    #cookie-notice {padding: 0.5rem 1rem; display: none; text-align: center; position: fixed; bottom: 0; width: calc(100% - 2rem); background: #222; color: rgba(255,255,255,0.8);}
+    #cookie-notice a {display: inline-block; cursor: pointer; margin-left: 0.5rem;}
+    @media (max-width: 767px) {
+        #cookie-notice span {display: block; padding-top: 3px; margin-bottom: 1rem;}
+        #cookie-notice a {position: relative; bottom: 4px;}
+    }
+</style>
+<div id="cookie-notice"><span>We would like to use third party cookies and scripts to improve the functionality of this website.</span><a id="cookie-notice-accept" class="btn btn-primary btn-sm">Approve</a><a href="/top/privacy" class="btn btn-primary btn-sm">More info</a></div>
+<script>
+  function loadGAonConsent(){
+      window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+      ga('create', 'UA-158910325-1', 'auto');
+      ga('set', 'anonymizeIp', true);
+      ga('send', 'pageview');
+      var gascript = document.createElement("script");
+      gascript.async = true;
+      gascript.src = "https://www.google-analytics.com/analytics.js";
+      document.getElementsByTagName("head")[0].appendChild(gascript, document.getElementsByTagName("head")[0]);               
+    }
+
+    function createCookie(name,value,days) {
+        var expires = "";
+        if (days) {
+            var date = new Date();
+            date.setTime(date.getTime() + (days*24*60*60*1000));
+            expires = "; expires=" + date.toUTCString();
+        }
+        document.cookie = name + "=" + value + expires + "; path=/";
+    }
+    function readCookie(name) {
+        var nameEQ = name + "=";
+        var ca = document.cookie.split(';');
+        for(var i=0;i < ca.length;i++) {
+            var c = ca[i];
+            while (c.charAt(0)==' ') c = c.substring(1,c.length);
+            if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length,c.length);
+        }
+        return null;
+    }
+    function eraseCookie(name) {
+        createCookie(name,"",-1);
+    }
+
+    if(readCookie('cookie-notice-dismissed')=='true') {
+        loadGAonConsent();
+    } else {
+        document.getElementById('cookie-notice').style.display = 'block';
+    }
+    document.getElementById('cookie-notice-accept').addEventListener("click",function() {
+        createCookie('cookie-notice-dismissed','true',31);
+        document.getElementById('cookie-notice').style.display = 'none';
+        location.reload();
+    });
+
+</script>
+
 <!-- 
      Because of the native support for backtick-style fenced code blocks 
      right within the Markdown is landed in Github Pages, 
