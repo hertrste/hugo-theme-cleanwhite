@@ -279,7 +279,9 @@
     });
     cc.on( "statusChanged", function ( cookieName, status, chosenBefore ) {
       if (cookieName == "cookieconsent_status_ANALYTICS" && status == "ALLOW") {
-        loadGAonConsent();
+        if (navigator.doNotTrack != 1 && navigator.doNotTrack != "yes" && window.doNotTrack != 1 && navigator.msDoNotTrack != 1) {
+          loadGAonConsent();
+        }
       }
       log('<em>statusChanged</em> event fired with status <em>' + status + '</em> for cookie <em>' + cookieName + '</em>');
     });
